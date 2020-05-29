@@ -26,10 +26,11 @@ else()
    message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
 
+
 LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
 
 find_package(OpenCV 3.1.0 REQUIRED)
-find_package(Eigen3 3.1.0 REQUIRED)
+find_package(Eigen3 3.2.10 EXACT REQUIRED)
 find_package(Pangolin REQUIRED)
 find_package(Cholmod REQUIRED)
 

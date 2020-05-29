@@ -854,15 +854,19 @@ bool LocalMapping::TryInitVIO(void)
 
 void LocalMapping::AddToLocalWindow(KeyFrame* pKF)
 {
-    mlLocalKeyFrames.push_back(pKF);
+    if (pKF->GetPrevKeyFrame()!=NULL)
+    {
+        mlLocalKeyFrames.push_back(pKF);
+    }
     if(mlLocalKeyFrames.size() > mnLocalWindowSize)
     {
         mlLocalKeyFrames.pop_front();
     }
-    else
+    else if (!mlLocalKeyFrames.empty())
     {
         KeyFrame* pKF0 = mlLocalKeyFrames.front();
-        while(mlLocalKeyFrames.size() < mnLocalWindowSize && pKF0->GetPrevKeyFrame()!=NULL)
+        while(mlLocalKeyFrames.size() < mnLocalWindowSize && pKF0->GetPrevKeyFrame()!=NULL 
+            && pKF0->GetPrevKeyFrame()->GetPrevKeyFrame()!=NULL)
         {
             pKF0 = pKF0->GetPrevKeyFrame();
             mlLocalKeyFrames.push_front(pKF0);
