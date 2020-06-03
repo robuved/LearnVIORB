@@ -134,7 +134,13 @@ void Viewer::Run()
         pangolin::FinishFrame();
 
         cv::Mat im = mpFrameDrawer->DrawFrame();
-        cv::imshow("ORB-SLAM2: Current Frame",im);
+        cv::Mat im_resized;
+        int max_height = 650;
+        double s;
+        s = im.size().height / (double)max_height;
+        int width = (int) (im.size().width / s);
+        cv::resize(im, im_resized, cv::Size(width, max_height));
+        cv::imshow("ORB-SLAM2: Current Frame", im_resized);
         cv::waitKey(mT);
 
         if(menuReset)

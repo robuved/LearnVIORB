@@ -49,6 +49,75 @@ bool System::bLocalMapAcceptKF()
     //return mpLocalMapper->ForsyncCheckNewKeyFrames();
 }
 
+void System::SaveMap(const string &filename)
+{
+    const vector<MapPoint*> &vpMPs = mpMap->GetAllMapPoints();
+    const vector<MapPoint*> &vpRefMPs = mpMap->GetReferenceMapPoints();
+
+    ofstream f;
+    f.open(filename.c_str());
+    f << fixed;
+
+    set<MapPoint*> spRefMPs(vpRefMPs.begin(), vpRefMPs.end());
+
+    if(vpMPs.empty())
+        return;
+
+    f << "landmark_id, X, Y, Z, is_reference_point" << endl;
+    for(size_t i=0, iend=vpMPs.size(); i<iend;i++)
+    {
+        if(vpMPs[i]->isBad())
+            continue;
+        cv::Mat pos = vpMPs[i]->GetWorldPos();
+        
+        f << vpMPs[i]->mnId << ",";
+        f << pos.at<float>(0) << "," << pos.at<float>(1) << "," << pos.at<float>(2) << ",";
+        if (spRefMPs.count(vpMPs[i]))
+        {
+            f << "1";
+        }
+        else 
+        {
+            f << "0";
+        }
+        f << endl;
+    }
+
+    f.close();
+    cout << endl << "Map saved!" << endl;
+}
+
+void System::SaveTracks(const string &filename)
+{ 
+    const vector<MapPoint*> &vpMPs = mpMap->GetAllMapPoints();
+
+    ofstream f;
+    f.open(filename.c_str());
+    f << fixed;
+
+    if(vpMPs.empty())
+        return;
+
+    f << "landmark_id, frame_id, timestamp, keypoint_id, u, v" << endl;
+    for(size_t i=0, iend=vpMPs.size(); i<iend;i++)
+    {
+        if(vpMPs[i]->isBad())
+            continue;
+        
+        mapMapPointObs/*map<KeyFrame*,size_t>*/ observations = vpMPs[i]->GetObservations();
+        for(mapMapPointObs/*map<KeyFrame*,size_t>*/::iterator mit=observations.begin(), mend=observations.end(); mit!=mend; mit++)
+        {
+            KeyFrame* pKFi = mit->first;
+            size_t kp_id = mit->second;
+            cv::Point2f pt = pKFi->mvKeys[kp_id].pt;
+            f << vpMPs[i]->mnId << "," << pKFi->mnId << "," << pKFi->mTimeStamp << ",";
+            f << kp_id << "," << pt.x << "," << pt.y << endl;
+        }
+    }
+
+    f.close();
+    cout << endl << "Tracks saved!" << endl;
+}
 
 void System::SaveKeyFrameTrajectoryNavState(const string &filename)
 {

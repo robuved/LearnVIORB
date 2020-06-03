@@ -54,6 +54,8 @@ class System
 public:
     bool bLocalMapAcceptKF(void);
     void SaveKeyFrameTrajectoryNavState(const string& filename);
+    void SaveMap(const string& filename);
+    void SaveTracks(const string& filename);
 
 public:
     // Input sensor

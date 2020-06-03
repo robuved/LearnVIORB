@@ -3,7 +3,7 @@
 # 1: realtime, 0: non-realtime
 test.RealTime: 0
 # Time for visual-inertial initialization
-test.VINSInitTime: 5.0
+test.VINSInitTime: 5
 
 # Modify test.InitVIOTmpPath and bagfile to the correct path
 # Path to save tmp files/results
@@ -22,13 +22,8 @@ test.DiscardTime: 0
 #bagfile: "/media/jp/JingpangPassport/3dataset/EuRoC-VIO/un_restamped/MH_04_difficult.bag"
 #bagfile: "/media/jp/JingpangPassport/3dataset/EuRoC-VIO/un_restamped/MH_05_difficult.bag"
 #bagfile: "/media/jp/JingpangPassport/3dataset/EuRoC-VIO/un_restamped/MH_02_easy.bag"
-bagfile: "/home/victor/Downloads/37_color.bag"
-#bagfile: "/media/jp/JingpangPassport/3dataset/EuRoC-VIO/un_restamped/V2_02_medium.bag"
-#bagfile: "/media/jp/JingpangPassport/3dataset/EuRoC-VIO/un_restamped/V2_01_easy.bag"
-#bagfile: "/media/jp/JingpangPassport/3dataset/EuRoC-VIO/un_restamped/V1_02_medium.bag"
-#bagfile: "/media/jp/JingpangPassport/3dataset/EuRoC-VIO/un_restamped/V1_01_easy.bag"
-
-#bagfile: "/media/jp/JingpangPassport/3dataset/EuRoC-VIO/un_restamped/V1_03_difficult.bag"
+# bagfile: "/media/jp/JingpangPassport/3dataset/EuRoC-VIO/un_restamped/MH_01_easy.bag"
+bagfile: /home/victor/Documents/MASTER_CERCETARE/planes/../../MASTER_CERCETARE_nonessentials/output/real_measured_boxes_simple/in_place_8_motionstracking_True_30/290/camera_mono_imu.bag
 #bagfile: "/media/jp/JingpangPassport/3dataset/EuRoC-VIO/un_restamped/V2_03_difficult.bag"
 
 
