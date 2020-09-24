@@ -1101,7 +1101,7 @@ void Tracking::MonocularInitialization()
         int nmatches = matcher.SearchForInitialization(mInitialFrame,mCurrentFrame,mvbPrevMatched,mvIniMatches,100);
 
         // Check if there are enough correspondences
-        if(nmatches<100)
+        if(nmatches<50)
         {
             delete mpInitializer;
             mpInitializer = static_cast<Initializer*>(NULL);
