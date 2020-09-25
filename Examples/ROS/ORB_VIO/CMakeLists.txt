@@ -59,8 +59,19 @@ src/MsgSync/MsgSynchronizer.cpp
 src/MsgSync/MsgSynchronizer.h
 )
 
+
+# Node for monocular camera
+rosbuild_add_executable(VIO2
+src/ros_vio_2.cc
+src/MsgSync/MsgSynchronizer.cpp
+src/MsgSync/MsgSynchronizer.h
+)
+
 target_link_libraries(VIO
 ${LIBS}
 )
 
+target_link_libraries(VIO2
+${LIBS}
+)
 

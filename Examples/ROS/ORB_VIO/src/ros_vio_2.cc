@@ -23,6 +23,7 @@
 #include<algorithm>
 #include<fstream>
 #include<chrono>
+#include <Eigen/Dense>
 
 #include<ros/ros.h>
 #include <cv_bridge/cv_bridge.h>
@@ -54,7 +55,7 @@ public:
 
 int main(int argc, char **argv)
 {
-    ros::init(argc, argv, "Mono");
+    ros::init(argc, argv, "Mono2");
     ros::start();
 
     if(argc != 3)
@@ -105,6 +106,19 @@ int main(int argc, char **argv)
     topics.push_back(imagetopic);
     topics.push_back(imutopic);
 
+
+    ORB_SLAM2::IMUData::_gyrBiasRw2 = config._IMUGyroWalk*config._IMUGyroWalk/**10*/;  //2e-12*1e3
+    ORB_SLAM2::IMUData::_accBiasRw2 = config._IMUAccWalk*config._IMUAccWalk/**10*/;  //4.5e-8*1e2
+
+    ORB_SLAM2::IMUData::_gyrMeasCov = Eigen::Matrix3d::Identity()*config._IMUNoiseGyro*config._IMUNoiseGyro/**100*/;       // sigma_g * sigma_g / dt, ~6e-6*10
+    ORB_SLAM2::IMUData::_accMeasCov = Eigen::Matrix3d::Identity()*config._IMUNoiseAcc*config._IMUNoiseAcc;       // sigma_a * sigma_a / dt, ~8e-4*10
+
+    // covariance of bias random walk
+    ORB_SLAM2::IMUData::_gyrBiasRWCov = Eigen::Matrix3d::Identity()*ORB_SLAM2::IMUData::_gyrBiasRw2;     // sigma_gw * sigma_gw * dt, ~2e-12
+    ORB_SLAM2::IMUData::_accBiasRWCov = Eigen::Matrix3d::Identity()*ORB_SLAM2::IMUData::_accBiasRw2; 
+
+    cout << "PARAMS: " << config._IMUNoiseGyro << " " << config._IMUNoiseAcc << " " << config._IMUGyroWalk << " "
+    << config._IMUAccWalk << endl;
     rosbag::View view(bag, rosbag::TopicQuery(topics));
     //while(ros::ok())
     BOOST_FOREACH(rosbag::MessageInstance const m, view)

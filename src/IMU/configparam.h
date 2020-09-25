@@ -29,7 +29,11 @@ public:
     std::string _bagfile;
     std::string _imageTopic;
     std::string _imuTopic;
-
+    double _IMUNoiseGyro;
+    double _IMUNoiseAcc;
+    double _IMUGyroWalk;
+    double _IMUAccWalk;
+    
     static std::string getTmpFilePath();
     static std::string _tmpFilePath;
 

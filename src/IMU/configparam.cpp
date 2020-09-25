@@ -42,6 +42,16 @@ ConfigParam::ConfigParam(std::string configfile)
     _ImageDelayToIMU = fSettings["Camera.delaytoimu"];
     std::cout<<"timestamp image delay to imu: "<<_ImageDelayToIMU<<std::endl;
 
+    _IMUNoiseGyro = fSettings["IMU.NoiseGyro"];
+    _IMUNoiseAcc = fSettings["IMU.NoiseAcc"];
+    _IMUGyroWalk = fSettings["IMU.GyroWalk"];
+    _IMUAccWalk = fSettings["IMU.AccWalk"];
+    std::cout<<"IMU.NoiseGyro: "<<_IMUNoiseGyro<<std::endl;
+    std::cout<<"IMU.NoiseAcc: "<<_IMUNoiseAcc<<std::endl;
+    std::cout<<"IMU.GyroWalk: "<<_IMUGyroWalk<<std::endl;
+    std::cout<<"IMU.AccWalk: "<<_IMUAccWalk<<std::endl;
+
+
     {
         cv::FileNode Tbc_ = fSettings["Camera.Tbc"];
         Eigen::Matrix<double,3,3> R;

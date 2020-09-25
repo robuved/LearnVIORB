@@ -1,6 +1,6 @@
 <launch>
 
- 	<node pkg="ORB_VIO" type="VIO" name="VIO" args="$(find ORB_VIO)/../../../Vocabulary/ORBvoc.bin $(find ORB_VIO)/../../../config/nexus_5x.yaml" cwd="node" output="screen">
+ 	<node pkg="ORB_VIO" type="VIO2" name="VIO2" args="$(find ORB_VIO)/../../../Vocabulary/ORBvoc.bin $(find ORB_VIO)/../../../config/nexus_5x.yaml" cwd="node" output="screen">
 	</node>
 
 </launch>
